@@ -1,0 +1,2 @@
+# PSVPictureCopyTool
+解决PSV图片在各种奇怪文件夹难以提取的问题
