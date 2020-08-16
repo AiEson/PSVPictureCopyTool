@@ -11,61 +11,63 @@ import javax.swing.filechooser.FileSystemView;
 public class app
 {
 
-private static void copyFileUsingFileStreams(File source, File dest) throws IOException {    
-    InputStream input = null;    
-    OutputStream output = null;    
-    try {
-           input = new FileInputStream(source);
-           output = new FileOutputStream(dest);        
-           byte[] buf = new byte[1024];        
-           int bytesRead;        
-           while ((bytesRead = input.read(buf)) != -1) {
-               output.write(buf, 0, bytesRead);
-           }
-    } finally {
-        input.close();
-        output.close();
-    }
-}
+    static String path2 = null;
 
-public static void isDirectory(File file) {
-		if(file.exists()){
-			if (file.isFile()) {
-				System.out.println(file.getAbsolutePath());
-				try{
-			copyFileUsingFileStreams(new File(file.getAbsolutePath()), new File("C:\\Users\\23684\\Pictures\\YS8\\" + new File(file.getAbsolutePath()).getName()));
-		}catch(Exception e)
-		{System.out.println(e);}
-			}else{
-				File[] list = file.listFiles();
-				if (list.length == 0) {
-					System.out.println(file.getAbsolutePath() + " is null");
-				} else {
-					for (int i = 0; i < list.length; i++) {
-						isDirectory(list[i]);
-					}
-				}
-			}
-		}else{
-		}
-	}
-public static void main(String args[]) 
-{
-	String path = null, path2 = null;
-	File desktop = new File(System.getProperty("user.home")+System.getProperty("file.separator")+"XX");
-	JFileChooser fileChooser = new JFileChooser(desktop.toString());
-	fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-	System.out.println("ÇëÑ¡ÔñÄúµÄPSVÖÐÒªÌáÈ¡Í¼Æ¬µÄÎÄ¼þ¼Ð...");
-	int returnVal = fileChooser.showOpenDialog(fileChooser);
-	if(returnVal == JFileChooser.APPROVE_OPTION){ 
-	path = fileChooser.getSelectedFile().getAbsolutePath();
-	} 
-	System.out.println("ÇëÑ¡ÔñÄúµÄÄ¿±êÎÄ¼þ¼Ð...");
-	int returnVal2 = fileChooser.showOpenDialog(fileChooser);
-	if(returnVal2 == JFileChooser.APPROVE_OPTION){ 
-	path2 = fileChooser.getSelectedFile().getAbsolutePath();
-	} 
-    isDirectory(new File("G:\\picture\\SCREENSHOT"));
-}
+    private static void copyFileUsingFileStreams(File source, File dest) throws IOException {
+        InputStream input = null;
+        OutputStream output = null;
+        try {
+            input = new FileInputStream(source);
+            output = new FileOutputStream(dest);
+            byte[] buf = new byte[1024];
+            int bytesRead;
+            while ((bytesRead = input.read(buf)) != -1) {
+                output.write(buf, 0, bytesRead);
+            }
+        } finally {
+            input.close();
+            output.close();
+        }
+    }
+
+    public static void isDirectory(File file) {
+        if(file.exists()){
+            if (file.isFile()) {
+                System.out.println(file.getAbsolutePath());
+                try{
+                    copyFileUsingFileStreams(new File(file.getAbsolutePath()), new File(path2 + File.separator + new File(file.getAbsolutePath()).getName()));
+                }catch(Exception e)
+                {System.out.println(e);}
+            }else{
+                File[] list = file.listFiles();
+                if (list.length == 0) {
+                    System.out.println(file.getAbsolutePath() + " is null");
+                } else {
+                    for (int i = 0; i < list.length; i++) {
+                        isDirectory(list[i]);
+                    }
+                }
+            }
+        }else{
+        }
+    }
+    public static void main(String args[])
+    {
+        String path = null;
+        File desktop = new File(System.getProperty("user.home")+System.getProperty("file.separator")+"XX");
+        JFileChooser fileChooser = new JFileChooser(desktop.toString());
+        fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        System.out.println("è¯·é€‰æ‹©æ‚¨çš„PSVä¸­è¦æå–å›¾ç‰‡çš„æ–‡ä»¶å¤¹...");
+        int returnVal = fileChooser.showOpenDialog(fileChooser);
+        if(returnVal == JFileChooser.APPROVE_OPTION){
+            path = fileChooser.getSelectedFile().getAbsolutePath();
+        }
+        System.out.println("è¯·é€‰æ‹©æ‚¨çš„ç›®æ ‡æ–‡ä»¶å¤¹...");
+        int returnVal2 = fileChooser.showOpenDialog(fileChooser);
+        if(returnVal2 == JFileChooser.APPROVE_OPTION){
+            path2 = fileChooser.getSelectedFile().getAbsolutePath();
+        }
+        isDirectory(new File(path));
+    }
 
 }
